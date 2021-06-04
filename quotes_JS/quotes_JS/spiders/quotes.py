@@ -4,7 +4,7 @@ from scrapy_splash import SplashRequest
 
 class QuotesSpider(scrapy.Spider):
     name = 'quotes'
-    allowed_domains = ['quotes.toscrape.com/js']
+    allowed_domains = ['quotes.toscrape.com']
 
     # Splash script that needs to be executed
     script = """
@@ -33,6 +33,7 @@ class QuotesSpider(scrapy.Spider):
         )
 
     def parse(self, response):
+        """ Responsible for scrapping required data """
         quotes = response.xpath("//div[@class='quote']")  # Get holds of the divs containing quotes
 
         for quote in quotes:
@@ -42,12 +43,13 @@ class QuotesSpider(scrapy.Spider):
                 'tags': quote.xpath(".//div[@class='tags']/a/text()").getall()
             }
 
+        # Grabs the URL from the next button on the page
         next_page = response.xpath("//li[@class='next']/a/@href").get()
-        print(next_page)
 
         if next_page:
-            absolute_url = f"https://quotes.toscrape.com{next_page}"
-            print(absolute_url)
+            """ Execute the following code if the next button is available """
+            absolute_url = f"https://quotes.toscrape.com{next_page}"  # Creates absolute URL for the next page
+            # Using SplashRequest class calls the parse method again
             yield SplashRequest(
                 url=absolute_url,
                 callback=self.parse,
