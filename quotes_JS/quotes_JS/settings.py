@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = 'quotes_JS.spiders'
 #USER_AGENT = 'quotes_JS (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -93,3 +93,5 @@ DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 SPLASH_URL = 'http://localhost:8050'
+
+FEED_EXPORT_ENCODING = 'utf8'
